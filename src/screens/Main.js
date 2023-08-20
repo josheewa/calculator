@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, Dimensions, TextInput, StyleSheet, TouchableOpacity, Pressable } from 'react-native'
 import React, { useState } from 'react'
 const { height, width } = Dimensions.get('window');
 
@@ -6,67 +6,64 @@ const { height, width } = Dimensions.get('window');
 export default function Main() {
     const [number, setNumber] = useState(0);
     const [bgColor, setBGC] = useState('darkgray');
+    const [clearBtn, setClear] = useState('AC')
 
     const numberInput = () => (
-        <View style={{ height: height / 5, width: width }}>
-            <TextInput
-                value={number + ""}
-                onChangeText={(t) => setNumber(t)}
+        <View style={{ height: height / 5, width: width, justifyContent: 'center' }}>
+            <Text
+                // value={number + ""}
+                // onChangeText={(t) => setNumber(t)}
                 style={styles.input}
-                inputMode='numeric'
-                keyboardType='number-pad'
-            />
+                // inputMode='numeric'
+                // keyboardType='number-pad'
+            >
+                {number}
+            </Text>
 
         </View>
 
     );
     
     const block = (val) => (
-        <TouchableOpacity style={styles.block}>
+        <TouchableOpacity
+            style={styles.block}
+            onPress={() => click(val)}
+            // value={val}
+        >
             <Text style={{ fontSize: 30, color: 'white' }}>{val}</Text>
         </TouchableOpacity>
     );
     
+    const click = (val) => {
+        if (val == '') {
+            return;
+        }
+        if (val === 'AC') {
+            setNumber('0')
+        }
+        if (!isNaN(val)) {
+            if (number === '0') {
+                setNumber(val)
+            } else {
+
+                setNumber((number+val))
+            }
+        }
+    }
+
     const topRow = [
-        "AC", "+/-", "%"
-    ]
+        clearBtn, "+/-", "%"
+    ];
 
     const numPad = [
-        "7", "8", "9", "4", "5", "6", "1", "2", "3", " ", "0", "."
-    ]
+        "7", "8", "9", "4", "5", "6", "1", "2", "3", "", "0", "."
+    ];
 
     const operators = [
         "÷", "x", "-", "+", "="
-    ]
+    ];
 
-    // const buttons = [
-    //     "AC", "+/-", "%", "÷", "7", "8", "9", "x", "4", "5", "6", "-", "1", "2", "3", " + ", "0", " ", ".", "="
-    // ];
-
-    const styles = StyleSheet.create({
-        inputCont: {
-            height: height / 4,
-            width: width,
-            backgroundColor: 'darkslategrey',
-            justifyContent: 'center'
-        },
-        input: {
-            flex: 1,
-            fontSize: 80,
-            textAlign: 'right',
-            color: 'white'
-        },
-        block: {
-            width: width / 4,
-            height: height * 3 / 20,
-            borderWidth: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderColor: 'white'
-            // backgroundColor: bgColor,
-
-        }
-    })
+    
     return (
       
         <View style={{flex: 1, justifyContent: 'flex-start'}}>
@@ -103,3 +100,27 @@ export default function Main() {
         </View>
   )
 }
+const styles = StyleSheet.create({
+        inputCont: {
+            height: height / 4,
+            width: width,
+            backgroundColor: 'darkslategrey',
+            justifyContent: 'center'
+        },
+        input: {
+            flex: 1,
+            fontSize: 80,
+            textAlign: 'right',
+            color: 'white'
+        },
+        block: {
+            width: width / 4,
+            height: height * 3 / 20,
+            borderWidth: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderColor: 'white'
+            // backgroundColor: bgColor,
+
+        }
+    })
