@@ -10,7 +10,7 @@ export default function Main() {
     const numberInput = () => (
         <View style={{ height: height / 5, width: width }}>
             <TextInput
-                value={number}
+                value={number + ""}
                 onChangeText={(t) => setNumber(t)}
                 style={styles.input}
                 inputMode='numeric'
@@ -27,9 +27,21 @@ export default function Main() {
         </TouchableOpacity>
     );
     
-    const buttons = [
-        "AC", "+/-", "%", "÷", "7", "8", "9", "x", "4", "5", "6", "-", "1", "2", "3", " + ", "0", " ", ".", "="
-    ];
+    const topRow = [
+        "AC", "+/-", "%"
+    ]
+
+    const numPad = [
+        "7", "8", "9", "4", "5", "6", "1", "2", "3", " ", "0", "."
+    ]
+
+    const operators = [
+        "÷", "x", "-", "+", "="
+    ]
+
+    // const buttons = [
+    //     "AC", "+/-", "%", "÷", "7", "8", "9", "x", "4", "5", "6", "-", "1", "2", "3", " + ", "0", " ", ".", "="
+    // ];
 
     const styles = StyleSheet.create({
         inputCont: {
@@ -50,28 +62,44 @@ export default function Main() {
             borderWidth: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: bgColor,
+            borderColor: 'white'
+            // backgroundColor: bgColor,
 
         }
     })
     return (
       
         <View style={{flex: 1, justifyContent: 'flex-start'}}>
-                <View style={styles.inputCont}> 
-                    {numberInput()}
+            <View style={styles.inputCont}> 
+                {numberInput()}
+            </View>
+
+            <View style={{ flexDirection: 'row' }}>
+                
+                <View style={{ flex: 3, backgroundColor: 'black', flexDirection: 'row', flexWrap: 'wrap', }}>
+                    {
+                        topRow.map(
+                            (e) => (
+                                block(e)
+                    ))}
+                    <View style={{ backgroundColor: 'midnightblue', flexDirection: 'row', flexWrap: 'wrap'}}>
+                        
+                        {
+                            numPad.map(
+                                (e) => (
+                                    block(e)
+                        ))}
+                    </View>
+                </View>
+                <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'blue'}}>
+                    {
+                        operators.map(
+                            (e) => (
+                                block(e)
+                    ))}
                 </View>
 
-                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-
-                {
-                    buttons.map(
-                        (e, index) => (
-                            block(e)
-                        )
-                    )
-                }
-                {/* setBGC((index + 1) % 4 == 0 ? 'orange' : 'darkgray') */}
-                </View>
+            </View>
         </View>
   )
 }
