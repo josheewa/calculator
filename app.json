@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2c77571c-f0c8-4456-858e-508e4ddc3a4f"
+      }
+    },
+    "owner": "josheewa"
   }
 }
